@@ -23,6 +23,7 @@ import (
 	"net"
 	"sync"
 	"sync/atomic"
+	"math/rand"
 	"time"
 
 	"github.com/eclipse/paho.mqtt.golang/packets"
@@ -544,6 +545,7 @@ func (c *client) Publish(topic string, qos byte, retained bool, payload interfac
 	pub.Qos = qos
 	pub.TopicName = topic
 	pub.Retain = retained
+	pub.MessageID = uint16(rand.Intn(65500))
 	switch payload.(type) {
 	case string:
 		pub.Payload = []byte(payload.(string))
